@@ -1,0 +1,51 @@
+[
+  {
+    "id": "physics-101",
+    "title": "Introduction to Physics",
+    "difficulty": "Beginner",
+    "category": "Physics",
+    "prerequisites": []
+  },
+  {
+    "id": "physics-102",
+    "title": "Wave-Particle Duality",
+    "difficulty": "Intermediate",
+    "category": "Physics",
+    "prerequisites": ["physics-101"]
+  },
+  {
+    "id": "physics-201",
+    "title": "The Principle of Superposition",
+    "difficulty": "Intermediate",
+    "category": "Physics",
+    "prerequisites": ["physics-102"]
+  },
+  {
+    "id": "physics-301",
+    "title": "Quantum Entanglement",
+    "difficulty": "Advanced",
+    "category": "Physics",
+    "prerequisites": ["physics-201"]
+  },
+  {
+    "id": "bio-101",
+    "title": "Cellular Biology Basics",
+    "difficulty": "Beginner",
+    "category": "Biology",
+    "prerequisites": []
+  },
+  {
+    "id": "bio-102",
+    "title": "Understanding Mitochondria",
+    "difficulty": "Intermediate",
+    "category": "Biology",
+    "prerequisites": ["bio-101"]
+  },
+  {
+    "id": "bio-201",
+    "title": "Introduction to DNA",
+    "difficulty": "Intermediate",
+    "category": "Biology",
+    "prerequisites": ["bio-101"]
+  }
+]

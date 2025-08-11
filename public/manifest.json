@@ -1,0 +1,38 @@
+{
+  "name": "SanJyoti - The Future of Learning",
+  "short_name": "SanJyoti",
+  "description": "Next-generation adaptive learning with AI mentors and immersive 3D/AR simulations.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0F172A",
+  "theme_color": "#5865F2",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Start Learning",
+      "short_name": "Learn",
+      "description": "Jump into your learning dashboard",
+      "url": "/learn"
+    },
+    {
+      "name": "AR Simulation",
+      "short_name": "AR",
+      "description": "Launch the AR Heart Simulation",
+      "url": "/ar-simulation"
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+:root {
+  /* --- Customization Variables for Animated Background --- */
+  --bg-color-1: #480ca8; /* Purple */
+  --bg-color-2: #f72585; /* Pink */
+  --bg-color-3: #4cc9f0; /* Blue */
+  --bg-color-4: #f9c74f; /* Yellow */
+  --bg-animation-duration: 20s;
+  --bg-zoom-level: 250%; /* How "zoomed in" the gradient is */
+
+  /* --- Other Theme Variables --- */
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --primary: 217.2 91.2% 59.8%;
+  --primary-foreground: 222.2 84% 4.9%;
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 217.2 91.2% 59.8%;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  color: hsl(var(--foreground));
+  font-feature-settings: "rlig" 1, "calt" 1;
+  cursor: default;
+
+  /* --- Animated Gradient Mesh Background --- */
+  background: radial-gradient(circle at 10% 20%, var(--bg-color-3), transparent 25%),
+              radial-gradient(circle at 80% 15%, var(--bg-color-2), transparent 25%),
+              radial-gradient(circle at 70% 80%, var(--bg-color-1), transparent 25%),
+              radial-gradient(circle at 25% 90%, var(--bg-color-4), transparent 25%),
+              hsl(var(--background));
+  background-size: var(--bg-zoom-level) var(--bg-zoom-level);
+  animation: gradientFlow var(--bg-animation-duration) ease infinite;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* --- Organic Noise Overlay --- */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPjxmaWx0ZXIgaWQ9J25vaXNlJyB4PScwJScgeT0nMCUnPjxmZVR1cmJ1bGVuY2UgdHlwZT0nc3R1cmJ1bGVuY2UnIGJhc2VGcmVxdWVuY3k9JzAuNScgbnVtT2N0YXZlcz0nMScgc2VlZD0nMTAnLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBmaWx0ZXI9J3VybCgjbm9pc2UpJy8+PC9zdmc+");
+  opacity: 0.04;
+  z-index: 1;
+}
+
+/* --- Breathing + Rotating Gradient Animation --- */
+@keyframes gradientFlow {
+  0%   { background-position: 0% 50%; background-size: 250% 250%; }
+  50%  { background-position: 100% 50%; background-size: 260% 260%; }
+  100% { background-position: 0% 50%; background-size: 250% 250%; }
+}
+
+
+/* --- Enhanced Glassmorphism --- */
+.glass {
+  background: rgba(20, 20, 30, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.4s ease, border-color 0.4s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.glass:hover {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* WebGL canvas optimization */
+canvas {
+  display: block;
+  touch-action: none;
+  position: relative;
+  z-index: 2;
+}
+/* --- Add these styles to the bottom of src/app/globals.css --- */
+
+/* --- Sticky Navbar Styles --- */
+.glass-top {
+  background: transparent;
+  border-bottom: 1px solid transparent;
+}
+
+.glass-scrolled {
+  background: rgba(15, 23, 42, 0.7); /* A semi-transparent dark blue */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* --- Reusable Nav Link Style --- */
+.nav-link {
+  @apply flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors;
+}
