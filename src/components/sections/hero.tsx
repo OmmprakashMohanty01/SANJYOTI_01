@@ -1,91 +1,85 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Canvas } from '@react-three/fiber'
-import { OrbitControls, Sphere, MeshDistortMaterial, Environment } from '@react-three/drei'
-import { Suspense } from 'react'
 import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
+import { useRipple } from '@/hooks/useRipple'
 
-function AnimatedSphere() {
-  return (
-    <Sphere args={[1, 64, 64]} position={[0, 0, 0]}>
-      <MeshDistortMaterial
-        color="#3B82F6"
-        attach="material"
-        distort={0.3}
-        speed={2}
-        roughness={0.1}
-        metalness={0.8}
-      />
-    </Sphere>
-  )
-}
+// This component will handle the staggered text animation
+const AnimatedText = ({ text, className }: { text: string, className?: string }) => {
+  const letters = Array.from(text);
 
-function HeroScene() {
+  const container = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.03, delayChildren: 0.2 },
+    },
+  };
+
+  const child = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1 },
+  };
+
   return (
-    <>
-      <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} />
-      <AnimatedSphere />
-      <Environment preset="night" />
-      <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={2} />
-    </>
-  )
-}
+    <motion.div
+      className={className}
+      variants={container}
+      initial="hidden"
+      animate="visible"
+      aria-label={text}
+    >
+      {letters.map((letter, index) => (
+        <motion.span variants={child} key={index}>
+          {letter === " " ? "\u00A0" : letter}
+        </motion.span>
+      ))}
+    </motion.div>
+  );
+};
 
 export function Hero() {
+  const heroButtonRef = useRipple<HTMLButtonElement>();
+
   return (
-    <section className="min-h-screen flex items-center justify-center relative pt-16">
-      <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <motion.div
-          initial={{ x: -50, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+    <section className="min-h-screen flex items-center justify-center relative pt-24 pb-12">
+      <div className="container mx-auto px-4 text-center">
+        
+        {/* FIX: The entire headline is now a flex column for proper stacking */}
+        <div className="flex flex-col items-center">
+          <AnimatedText text="The Future of Learning," className="text-5xl lg:text-7xl font-bold leading-tight" />
+          
+          {/* FIX: "Personalized" now has the animated gradient and no box */}
+          <AnimatedText text="Personalized." className="text-5xl lg:text-7xl font-bold leading-tight text-gradient-animated mt-2" />
+        </div>
+
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 1 }}
+          className="text-xl text-muted-foreground mt-8 mb-10 max-w-3xl mx-auto leading-relaxed"
         >
-          <h1 className="text-5xl lg:text-7xl font-bold leading-tight mb-6">
-            Learn in
-            <span className="text-primary block animate-glow">3D Space</span>
-          </h1>
-          <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-            Experience the future of education with adaptive 3D lessons, AI tutoring, 
-            and real-time collaboration that transforms how you learn.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Link href="/learn">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-primary text-primary-foreground rounded-lg font-semibold shadow-lg hover:shadow-primary/25 transition-all duration-300"
-                data-cursor-hover
-                data-cursor-accent="#3B82F6"
-              >
-                Start Learning
-              </motion.button>
-            </Link>
-            <Link href="/editor">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 glass border-2 border-white/20 rounded-lg font-semibold hover:border-primary/50 transition-all duration-300"
-                data-cursor-hover
-              >
-                Create Lessons
-              </motion.button>
-            </Link>
-          </div>
-        </motion.div>
+          Welcome to SanJyoti. Experience the world's first adaptive learning platform with AI mentors, emotional recognition, and immersive AR simulations.
+        </motion.p>
         
         <motion.div
-          initial={{ x: 50, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-          className="h-96 w-full rounded-xl overflow-hidden glass"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 1.2 }}
         >
-          <Canvas camera={{ position: [0, 0, 5], fov: 60 }}>
-            <Suspense fallback={null}>
-              <HeroScene />
-            </Suspense>
-          </Canvas>
+          <Link href="/learn" passHref>
+            <motion.button
+              ref={heroButtonRef}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="group btn-glow-icon px-8 py-4 bg-primary text-primary-foreground rounded-lg font-semibold shadow-lg hover:shadow-primary/25 transition-all duration-300 btn-ripple flex items-center mx-auto"
+              data-cursor-hover
+            >
+              Start Your Journey
+              <ArrowRight className="ml-2 h-5 w-5 btn-icon" /> {/* NEW: Added icon */}
+            </motion.button>
+          </Link>
         </motion.div>
       </div>
     </section>

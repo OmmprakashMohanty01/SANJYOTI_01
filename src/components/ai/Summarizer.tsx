@@ -6,7 +6,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Card } from "../ui/card";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
-import { Sparkles, Loader } from "lucide-react"; // Correct icon name is 'Loader'
+import { Sparkles } from "lucide-react";
+import { AiLoader } from "../ui/AiLoader"; // <-- New loader component
 
 interface Summary {
   narrative: string;
@@ -65,11 +66,13 @@ export function Summarizer() {
           />
           <Button type="submit" className="mt-4 w-full" disabled={isLoading}>
             {isLoading ? (
-              <Loader className="animate-spin mr-2" />
+              "Generating..."
             ) : (
-              <Sparkles className="mr-2 h-4 w-4" />
+              <>
+                <Sparkles className="mr-2 h-4 w-4" />
+                Generate Summary
+              </>
             )}
-            Generate Summary
           </Button>
         </form>
       </Card>
@@ -77,29 +80,46 @@ export function Summarizer() {
       <div className="mt-6">
         <AnimatePresence>
           {isLoading && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-center mt-4">
-              <p>SanJyoti AI is thinking...</p>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="text-center mt-4"
+            >
+              {/* --- NEW LOADER --- */}
+              <AiLoader text="SanJyoti AI is thinking..." />
             </motion.div>
           )}
         </AnimatePresence>
-        
+
         <AnimatePresence>
           {error && (
-              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="mt-4 text-red-500 text-center bg-red-500/10 p-3 rounded-lg">
-                  {error}
-              </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="mt-4 text-red-500 text-center bg-red-500/10 p-3 rounded-lg"
+            >
+              {error}
+            </motion.div>
           )}
         </AnimatePresence>
-        
+
         <AnimatePresence>
           {summary && (
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+            >
               <Card className="glass p-6 mt-6">
                 <h4 className="font-semibold text-lg mb-2">Narrative Summary</h4>
                 <p className="text-muted-foreground mb-4">{summary.narrative}</p>
                 <h4 className="font-semibold text-lg mb-2">Key Points</h4>
                 <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                  {summary.bullets.map((bullet, i) => <li key={i}>{bullet}</li>)}
+                  {summary.bullets.map((bullet, i) => (
+                    <li key={i}>{bullet}</li>
+                  ))}
                 </ul>
               </Card>
             </motion.div>

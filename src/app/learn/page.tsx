@@ -37,9 +37,8 @@ function ProgressVisualization() {
 }
 
 export default function LearnPage() {
-  const { setCurrentPageContext } = useUserActions();
+  const { setCurrentPageContext, resetProgress } = useUserActions();
   const { completedLessons } = useUserState();
-  const { resetProgress } = useUserActions();
   const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
@@ -58,47 +57,60 @@ export default function LearnPage() {
   return (
     <div className="min-h-screen pt-24 pb-12 container mx-auto px-4 space-y-12">
       <div>
-        <h1 className="text-4xl font-bold mb-2">Learning Dashboard</h1>
+        {/* Applied glow effect */}
+        <h1 className="text-4xl font-bold mb-2 text-glow">Learning Dashboard</h1>
         <p className="text-muted-foreground text-lg">
-            Welcome back! Here is your progress at a glance.
+          Welcome back! Here is your progress at a glance.
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="space-y-8">
-            <div className="grid grid-cols-2 gap-6">
-                <Card className="glass p-6">
-                    <div className="flex items-center space-x-4">
-                        <div className="p-3 bg-primary/20 rounded-lg"><BookOpen className="w-6 h-6 text-primary" /></div>
-                        <div><p className="text-2xl font-bold">{completedLessons.length}</p><p className="text-muted-foreground">Lessons Done</p></div>
-                    </div>
-                </Card>
-                <Card className="glass p-6">
-                    <div className="flex items-center space-x-4">
-                        <div className="p-3 bg-orange-500/20 rounded-lg"><Target className="w-6 h-6 text-orange-500" /></div>
-                        <div><p className="text-2xl font-bold">{averageScore}%</p><p className="text-muted-foreground">Average Score</p></div>
-                    </div>
-                </Card>
-            </div>
-             <Card className="glass p-4">
-              <div className="h-96 rounded-lg overflow-hidden">
-                <Canvas camera={{ position: [0, 0, 4], fov: 50 }}>
-                  <ProgressVisualization />
-                </Canvas>
+          <div className="grid grid-cols-2 gap-6">
+            <Card className="glass p-6">
+              <div className="flex items-center space-x-4">
+                <div className="p-3 bg-primary/20 rounded-lg">
+                  <BookOpen className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <p className="text-2xl font-bold">{completedLessons.length}</p>
+                  <p className="text-muted-foreground">Lessons Done</p>
+                </div>
               </div>
             </Card>
+            <Card className="glass p-6">
+              <div className="flex items-center space-x-4">
+                <div className="p-3 bg-orange-500/20 rounded-lg">
+                  <Target className="w-6 h-6 text-orange-500" />
+                </div>
+                <div>
+                  <p className="text-2xl font-bold">{averageScore}%</p>
+                  <p className="text-muted-foreground">Average Score</p>
+                </div>
+              </div>
+            </Card>
+          </div>
+
+          <Card className="glass p-4">
+            <div className="h-96 rounded-lg overflow-hidden">
+              <Canvas camera={{ position: [0, 0, 4], fov: 50 }}>
+                <ProgressVisualization />
+              </Canvas>
+            </div>
+          </Card>
         </div>
 
         <div>
-            <Pathfinder />
+          <Pathfinder />
         </div>
       </div>
-       <div className="text-center">
-            <Button onClick={resetProgress} variant="destructive">
-                <RotateCcw className="w-4 h-4 mr-2" />
-                Reset All Progress
-            </Button>
-       </div>
+
+      <div className="text-center">
+        <Button onClick={resetProgress} variant="destructive">
+          <RotateCcw className="w-4 h-4 mr-2" />
+          Reset All Progress
+        </Button>
+      </div>
     </div>
   );
 }

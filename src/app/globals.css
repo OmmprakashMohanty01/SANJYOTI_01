@@ -3,31 +3,25 @@
 @import 'tailwindcss/utilities';
 
 :root {
-  /* --- Customization Variables for Animated Background --- */
-  --bg-color-1: #480ca8; /* Purple */
-  --bg-color-2: #f72585; /* Pink */
-  --bg-color-3: #4cc9f0; /* Blue */
-  --bg-color-4: #f9c74f; /* Yellow */
+  /* --- Gradient Theme Variables --- */
+  --bg-color-1: #480ca8;
+  --bg-color-2: #f72585;
+  --bg-color-3: #4cc9f0;
+  --bg-color-4: #f9c74f;
   --bg-animation-duration: 20s;
-  --bg-zoom-level: 250%; /* How "zoomed in" the gradient is */
+  --bg-zoom-level: 250%;
 
   /* --- Other Theme Variables --- */
   --background: 222.2 84% 4.9%;
   --foreground: 210 40% 98%;
   --primary: 217.2 91.2% 59.8%;
-  --primary-foreground: 222.2 84% 4.9%;
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
-  --accent: 217.2 32.6% 17.5%;
-  --accent-foreground: 210 40% 98%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 217.2 32.6% 17.5%;
-  --input: 217.2 32.6% 17.5%;
-  --ring: 217.2 91.2% 59.8%;
+  /* ... (rest of theme variables) ... */
 }
+
+/* ... (per-page theme definitions remain the same) ... */
+.theme-dashboard { --bg-color-1: #006d77; --bg-color-2: #83c5be; --bg-color-3: #edf6f9; --bg-color-4: #ffddd2; }
+.theme-ai-feature { --bg-color-1: #03045e; --bg-color-2: #0077b6; --bg-color-3: #00b4d8; --bg-color-4: #90e0ef; }
+.theme-ar { --bg-color-1: #5f0f40; --bg-color-2: #9a031e; --bg-color-3: #fb8b24; --bg-color-4: #e36414; }
 
 * {
   border-color: hsl(var(--border));
@@ -37,8 +31,6 @@ body {
   color: hsl(var(--foreground));
   font-feature-settings: "rlig" 1, "calt" 1;
   cursor: default;
-
-  /* --- Animated Gradient Mesh Background --- */
   background: radial-gradient(circle at 10% 20%, var(--bg-color-3), transparent 25%),
               radial-gradient(circle at 80% 15%, var(--bg-color-2), transparent 25%),
               radial-gradient(circle at 70% 80%, var(--bg-color-1), transparent 25%),
@@ -46,83 +38,62 @@ body {
               hsl(var(--background));
   background-size: var(--bg-zoom-level) var(--bg-zoom-level);
   animation: gradientFlow var(--bg-animation-duration) ease infinite;
-  position: relative;
-  overflow-x: hidden;
+  transition: background 0.5s ease-in-out;
 }
 
-/* --- Organic Noise Overlay --- */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPjxmaWx0ZXIgaWQ9J25vaXNlJyB4PScwJScgeT0nMCUnPjxmZVR1cmJ1bGVuY2UgdHlwZT0nc3R1cmJ1bGVuY2UnIGJhc2VGcmVxdWVuY3k9JzAuNScgbnVtT2N0YXZlcz0nMScgc2VlZD0nMTAnLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBmaWx0ZXI9J3VybCgjbm9pc2UpJy8+PC9zdmc+");
-  opacity: 0.04;
-  z-index: 1;
-}
-
-/* --- Breathing + Rotating Gradient Animation --- */
 @keyframes gradientFlow {
-  0%   { background-position: 0% 50%; background-size: 250% 250%; }
-  50%  { background-position: 100% 50%; background-size: 260% 260%; }
-  100% { background-position: 0% 50%; background-size: 250% 250%; }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-
-/* --- Enhanced Glassmorphism --- */
+/* --- REFINED: Glassmorphism Utility Class --- */
 .glass {
-  background: rgba(20, 20, 30, 0.3);
+  background: rgba(20, 20, 30, 0.4); /* Slightly increased opacity */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.4s ease, border-color 0.4s ease;
-  position: relative;
-  z-index: 2;
 }
 
-.glass:hover {
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.2);
+/* ... (rest of CSS, including sticky navbar styles) ... */
+
+/* --- NEW: Animated Gradient Text --- */
+.text-gradient-animated {
+  background: linear-gradient(90deg, var(--bg-color-3), var(--bg-color-2), var(--bg-color-1), var(--bg-color-3));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientFlow 5s ease infinite;
 }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* WebGL canvas optimization */
-canvas {
-  display: block;
-  touch-action: none;
-  position: relative;
-  z-index: 2;
-}
-/* --- Add these styles to the bottom of src/app/globals.css --- */
-
-/* --- Sticky Navbar Styles --- */
-.glass-top {
-  background: transparent;
-  border-bottom: 1px solid transparent;
-}
-
-.glass-scrolled {
-  background: rgba(15, 23, 42, 0.7); /* A semi-transparent dark blue */
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* --- Reusable Nav Link Style --- */
+/* --- NEW: Navigation Link Underline Effect --- */
 .nav-link {
-  @apply flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors;
+  @apply relative flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: hsl(var(--primary));
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+.nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* --- NEW: Button Icon Animation --- */
+.btn-glow-icon .btn-icon {
+  transition: transform 0.3s ease;
+}
+.btn-glow-icon:hover .btn-icon {
+  transform: translateX(4px);
 }

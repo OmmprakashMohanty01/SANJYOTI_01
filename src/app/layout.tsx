@@ -6,6 +6,8 @@ import { Providers } from '@/components/providers'
 import { Navigation } from '@/components/layout/navigation'
 import { ClarityEngineWidget } from '@/components/ai/ClarityEngineWidget' // <-- Import the new widget
 import ParticleOrbitEffect from '@/components/ui/ParticleOrbitEffect'
+import { ThemeProvider } from '@/components/layout/ThemeProvider'
+import NeuralNetwork from '@/components/effects/NeuralNetwork'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -31,12 +33,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} bg-background`}>
+      <body className={inter.className}>
         <Providers>
+          <ThemeProvider />
           <ParticleOrbitEffect />
+          <NeuralNetwork /> {/* <-- Add it here */}
           <Navigation />
           {children}
-          <ClarityEngineWidget /> {/* <-- Add the widget here */}
+          <ClarityEngineWidget />
         </Providers>
       </body>
     </html>
