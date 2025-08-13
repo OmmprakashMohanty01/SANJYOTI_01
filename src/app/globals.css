@@ -1,9 +1,13 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+@import 'react-circular-progressbar/dist/styles.css';
 
+/* ============================================================
+   Root Theme Variables
+   ============================================================ */
 :root {
-  /* --- Gradient Theme Variables --- */
+  /* --- Default (Homepage) Gradient Theme --- */
   --bg-color-1: #480ca8;
   --bg-color-2: #f72585;
   --bg-color-3: #4cc9f0;
@@ -11,18 +15,39 @@
   --bg-animation-duration: 20s;
   --bg-zoom-level: 250%;
 
-  /* --- Other Theme Variables --- */
+  /* --- Core Theme Colors --- */
   --background: 222.2 84% 4.9%;
   --foreground: 210 40% 98%;
   --primary: 217.2 91.2% 59.8%;
-  /* ... (rest of theme variables) ... */
+  --primary-foreground: 210 40% 98%;
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 224.3 76.3% 48%;
+  --radius: 0.5rem;
+
+  /* --- Brand Accents --- */
+  --accent-yellow: #FFD700;
+  --accent-pink: #FF00AA;
 }
 
-/* ... (per-page theme definitions remain the same) ... */
+/* ============================================================
+   Per-Page Gradient Themes
+   ============================================================ */
 .theme-dashboard { --bg-color-1: #006d77; --bg-color-2: #83c5be; --bg-color-3: #edf6f9; --bg-color-4: #ffddd2; }
 .theme-ai-feature { --bg-color-1: #03045e; --bg-color-2: #0077b6; --bg-color-3: #00b4d8; --bg-color-4: #90e0ef; }
 .theme-ar { --bg-color-1: #5f0f40; --bg-color-2: #9a031e; --bg-color-3: #fb8b24; --bg-color-4: #e36414; }
 
+/* ============================================================
+   Global Resets
+   ============================================================ */
 * {
   border-color: hsl(var(--border));
 }
@@ -31,6 +56,8 @@ body {
   color: hsl(var(--foreground));
   font-feature-settings: "rlig" 1, "calt" 1;
   cursor: default;
+
+  /* Colorful animated gradient behind 3D particle system */
   background: radial-gradient(circle at 10% 20%, var(--bg-color-3), transparent 25%),
               radial-gradient(circle at 80% 15%, var(--bg-color-2), transparent 25%),
               radial-gradient(circle at 70% 80%, var(--bg-color-1), transparent 25%),
@@ -41,35 +68,30 @@ body {
   transition: background 0.5s ease-in-out;
 }
 
+/* ============================================================
+   Background Animation
+   ============================================================ */
 @keyframes gradientFlow {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* --- REFINED: Glassmorphism Utility Class --- */
+/* ============================================================
+   Frosted Glass Effects
+   ============================================================ */
 .glass {
-  background: rgba(20, 20, 30, 0.4); /* Slightly increased opacity */
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
-/* ... (rest of CSS, including sticky navbar styles) ... */
-
-/* --- NEW: Animated Gradient Text --- */
-.text-gradient-animated {
-  background: linear-gradient(90deg, var(--bg-color-3), var(--bg-color-2), var(--bg-color-1), var(--bg-color-3));
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientFlow 5s ease infinite;
-}
-
-/* --- NEW: Navigation Link Underline Effect --- */
+/* ============================================================
+   Navigation Link Hover Underline
+   ============================================================ */
 .nav-link {
   @apply relative flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors;
 }
@@ -90,10 +112,60 @@ body {
   transform-origin: bottom left;
 }
 
-/* --- NEW: Button Icon Animation --- */
-.btn-glow-icon .btn-icon {
-  transition: transform 0.3s ease;
+/* ============================================================
+   Persistent Call-to-Action Button
+   ============================================================ */
+.persistent-cta {
+  box-shadow: 0 0 20px hsl(var(--primary) / 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.btn-glow-icon:hover .btn-icon {
-  transform: translateX(4px);
+.persistent-cta:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px hsl(var(--primary));
+}
+
+/* ============================================================
+   Circular Progress Bar Styling
+   ============================================================ */
+.CircularProgressbar .CircularProgressbar-path {
+  stroke: hsl(var(--primary));
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s ease 0s;
+}
+.CircularProgressbar .CircularProgressbar-trail {
+  stroke: hsl(var(--border));
+}
+.CircularProgressbar .CircularProgressbar-text {
+  fill: hsl(var(--foreground));
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* ============================================================
+   Text Animation Effects
+   ============================================================ */
+@keyframes gradient-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.text-gradient-animated {
+  background: linear-gradient(90deg, #9b59b6, #e91e63, #00bcd4, #9b59b6);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-flow 4s ease infinite;
+}
+
+@keyframes rainbow-pulse {
+  0%   { color: #FF00AA; }
+  25%  { color: #9b59b6; }
+  50%  { color: #00CFFF; }
+  75%  { color: #FFD700; }
+  100% { color: #FF00AA; }
+}
+.text-rainbow-pulse {
+  animation: rainbow-pulse 4s linear infinite;
 }

@@ -1,15 +1,18 @@
-// src/app/layout.tsx
 import './globals.css'
 import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
+import { Poppins } from 'next/font/google'
 import { Providers } from '@/components/providers'
 import { Navigation } from '@/components/layout/navigation'
-import { ClarityEngineWidget } from '@/components/ai/ClarityEngineWidget' // <-- Import the new widget
+import { ClarityEngineWidget } from '@/components/ai/ClarityEngineWidget'
 import ParticleOrbitEffect from '@/components/ui/ParticleOrbitEffect'
 import { ThemeProvider } from '@/components/layout/ThemeProvider'
-import NeuralNetwork from '@/components/effects/NeuralNetwork'
+import { ThreeDBackground } from '@/components/effects/ThreeDBackground'
+import { PersistentCTA } from '@/components/layout/PersistentCTA'
 
-const inter = Inter({ subsets: ['latin'] })
+const poppins = Poppins({ 
+  subsets: ['latin'],
+  weight: ['400', '600', '700']
+});
 
 export const metadata: Metadata = {
   title: 'SanJyoti - The Future of Learning',
@@ -23,7 +26,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#5865F2',
+  themeColor: '#0F172A',
 }
 
 export default function RootLayout({
@@ -33,13 +36,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={poppins.className}>
         <Providers>
           <ThemeProvider />
           <ParticleOrbitEffect />
-          <NeuralNetwork /> {/* <-- Add it here */}
+          {/* The single, global 3D background is rendered here for all pages */}
+          <ThreeDBackground /> 
           <Navigation />
+          {/* All page content (children) will render on top of the background */}
           {children}
+          <PersistentCTA />
           <ClarityEngineWidget />
         </Providers>
       </body>

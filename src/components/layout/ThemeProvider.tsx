@@ -7,21 +7,22 @@ export function ThemeProvider() {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Clear all theme classes first
+    // This function runs every time the page changes.
+    // First, it removes any old theme classes from the body.
     document.body.classList.remove('theme-dashboard', 'theme-ai-feature', 'theme-ar');
 
-    // Apply the correct theme based on the current route
+    // Then, it adds the correct theme class based on the current URL path.
     if (pathname === '/learn') {
       document.body.classList.add('theme-dashboard');
     } else if (pathname.startsWith('/ar')) {
       document.body.classList.add('theme-ar');
-    } else if (['/summarizer', '/quiz', '/chat'].includes(pathname)) {
+    } else if (['/summarizer', '/quiz', '/chat', '/collaborate'].includes(pathname)) {
       document.body.classList.add('theme-ai-feature');
     }
-    // The default theme (for homepage) is applied if no other theme matches
+    // If none of these match (like the homepage), the default theme from globals.css is used.
     
-  }, [pathname]);
+  }, [pathname]); // This effect re-runs whenever the pathname changes.
 
-  // This component doesn't render anything, it just applies a side effect.
+  // This component doesn't render any visible HTML. Its only job is to manage the body class.
   return null;
 }

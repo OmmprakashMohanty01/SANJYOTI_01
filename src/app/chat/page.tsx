@@ -1,16 +1,34 @@
-// src/app/chat/page.tsx
+'use client';
+
+import { useEffect } from 'react';
+import { useUserActions } from '@/store/useUserState';
 import { LinguaMentor } from "@/components/ai/LinguaMentor";
+import { PageHeader } from '@/components/layout/PageHeader';
+import { MainLayout } from '@/components/layout/MainLayout';
 
 export default function ChatPage() {
+  const { setCurrentPageContext } = useUserActions();
+
+  useEffect(() => {
+    setCurrentPageContext("Clarity Engine");
+  }, [setCurrentPageContext]);
+
   return (
-    <main className="min-h-screen pt-24 pb-12 container mx-auto px-4 flex flex-col items-center">
-      <div className="text-center mb-8">
-        <h1 className="text-4xl lg:text-5xl font-bold mb-2">AI Language Buddy</h1>
-        <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
-          Chat with LinguaMentor to practice your English. It will correct your mistakes in real-time.
-        </p>
+    // We use the MainLayout to provide the consistent page structure and background
+    <MainLayout>
+      {/* 
+        This div centers the content vertically and horizontally within the layout.
+        It ensures both the header and the chat component are visible and properly aligned.
+      */}
+      <div className="flex flex-col items-center w-full">
+        <PageHeader 
+          title="AI Language Buddy"
+          subtitle="Chat with LinguaMentor to practice your English. It will correct your mistakes in real-time."
+        />
+        <div className="w-full mt-4">
+            <LinguaMentor />
+        </div>
       </div>
-      <LinguaMentor />
-    </main>
+    </MainLayout>
   );
 }

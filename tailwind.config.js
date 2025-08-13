@@ -1,5 +1,7 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+// tailwind.config.ts
+import type { Config } from 'tailwindcss'
+
+const config: Config = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -33,11 +35,15 @@ module.exports = {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
+
+        // Brand accent colors for unified palette
+        'accent-yellow': '#FFD700',
+        'accent-pink': '#FF00AA',
       },
       animation: {
-        'float': 'float 6s ease-in-out infinite',
-        'glow': 'glow 2s ease-in-out infinite alternate',
-        'shimmer': 'shimmer 2s linear infinite',
+        float: 'float 6s ease-in-out infinite',
+        glow: 'glow 2s ease-in-out infinite alternate',
+        shimmer: 'shimmer 2s linear infinite',
       },
       keyframes: {
         float: {
@@ -60,3 +66,5 @@ module.exports = {
   },
   plugins: [],
 }
+
+export default config
