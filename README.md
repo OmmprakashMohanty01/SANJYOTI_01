@@ -1,4 +1,4 @@
-# Nexus 3D Learning Platform
+# 3D Learning Platform
 
 🚀 **Production-ready, accessible, highly-performant 3D web learning application**
 
